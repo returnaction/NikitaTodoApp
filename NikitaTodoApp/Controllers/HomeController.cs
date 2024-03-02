@@ -46,7 +46,23 @@ namespace NikitaTodoApp.Controllers
                 return View(todo);
             }
 
-            _unitOfWork.Todo.Add(todo);
+            _unitOfWork.Todo.Update(todo);
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int id)
+        {
+            Todo? todo = _unitOfWork.Todo.Get(todo => todo.Id == id);
+            return View(todo);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteAction(int id)
+        {
+            Todo? todo = _unitOfWork.Todo.Get(todo => todo.Id == id);
+            _unitOfWork.Todo.Remove(todo);
             _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
