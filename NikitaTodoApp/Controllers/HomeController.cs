@@ -74,6 +74,20 @@ namespace NikitaTodoApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Complete(int id)
+        {
+            Todo? todo = _unitOfWork.Todo.Get(todo => todo.Id == id);
+
+            if (todo.IsCompleted)
+                todo.IsCompleted = false;
+            else
+                todo.IsCompleted = true;
+
+            _unitOfWork.Todo.Update(todo);
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult Privacy()
         {

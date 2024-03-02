@@ -6,15 +6,15 @@
 
 <h1>Todo manager app</h1>
 
-<p>
+<div class="text-end">
     <a asp-action="Upsert" class="btn btn-primary">Create New</a>
-</p>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>IsCompleted</th>
+            <th>Completed</th>
             <th></th>
         </tr>
     </thead>
@@ -22,12 +22,20 @@
 @foreach (Todo todo in Model) 
 {
         <tr>
-            <td>@todo.Id</td>
-            <td>@todo.Title</td>
-            <td>@todo.IsCompleted</td>
-            <td>
-                <a asp-action="Upsert" asp-route-id="@todo.Id" class="btn btn-secondary">Edit</a> |
-                <a asp-action="Details" asp-route-id="@todo.Id" class="btn btn-primary">Details</a> |
+            <td class="col-1">@todo.Id</td>
+                <td class="col-5"><a asp-action="Details" asp-route-id="@todo.Id">@todo.Title</a></td>
+                <td>
+                    @{
+                        string btnClass = "btn btn-outline-success";
+                        if (todo.IsCompleted)
+                        {
+                            btnClass += " bg-success text-white";
+                        }
+                    }
+                    <a asp-action="Complete" asp-route-id="@todo.Id" class="@btnClass">@todo.IsCompleted</a>
+                </td>
+            <td class="text-end">
+                <a asp-action="Upsert" asp-route-id="@todo.Id" class="btn btn-secondary">Edit</a> 
                 <a asp-action="Delete" asp-route-id="@todo.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
