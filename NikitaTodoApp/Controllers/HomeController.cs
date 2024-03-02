@@ -52,8 +52,22 @@ namespace NikitaTodoApp.Controllers
                 return View(todo);
             }
 
-            _unitOfWork.Todo.Update(todo);
-            _unitOfWork.Save();
+            // for create
+            if (todo.Id == 0)
+            {
+                _unitOfWork.Todo.Add(todo);
+                _unitOfWork.Save();
+
+                TempData["success"] = $"Todo {todo.Title} is created";
+            }
+            // for update
+            else
+            {
+                _unitOfWork.Todo.Update(todo);
+                _unitOfWork.Save();
+
+                TempData["success"] = $"Todo {todo.Title} is updated";
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -70,6 +84,8 @@ namespace NikitaTodoApp.Controllers
             Todo? todo = _unitOfWork.Todo.Get(todo => todo.Id == id);
             _unitOfWork.Todo.Remove(todo);
             _unitOfWork.Save();
+
+            TempData["success"] = $"Todo {todo.Title} is deleted";
 
             return RedirectToAction(nameof(Index));
         }
