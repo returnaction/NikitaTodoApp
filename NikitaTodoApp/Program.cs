@@ -1,11 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using NikitaTodoApp.Data;
+using NikitaTodoApp.Repository;
+using NikitaTodoApp.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
