@@ -24,6 +24,12 @@ namespace NikitaTodoApp.Controllers
             return View(todos);
         }
 
+        public IActionResult Details(int id)
+        {
+            Todo? todo = _unitOfWork.Todo.Get(todo => todo.Id == id);
+            return View(todo);
+        }
+
         public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)
@@ -67,6 +73,7 @@ namespace NikitaTodoApp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
 
         public IActionResult Privacy()
         {
