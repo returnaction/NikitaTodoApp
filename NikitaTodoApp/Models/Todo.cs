@@ -8,7 +8,7 @@ namespace NikitaTodoApp.Models
         public int Id { get; set; }
 
         [Required]
-        public int Title { get; set; }
+        public string Title { get; set; } = null!;
 
         [MaxLength(200)]
         public string? Description { get; set; }
