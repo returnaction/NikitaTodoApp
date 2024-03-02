@@ -1,0 +1,53 @@
+﻿@model Todo
+
+@{
+    ViewData["Title"] = "Upsert";
+}
+<div class="container">
+
+
+    <h1>@(Model.Id != 0 ? "Update" : "Create")</h1>
+
+    <h4>Todo</h4>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="Upsert">
+                <input asp-for="Id" hidden />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsCompleted" /> @Html.DisplayNameFor(model => model.IsCompleted)
+                    </label>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                    <div class="col-md-auto">
+                        <button type="submit" class="btn btn-primary">@(Model.Id != 0 ? "Update" : "Create")</button>
+                    </div>
+                    <div class="col-md-auto">
+                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   
+</div>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
