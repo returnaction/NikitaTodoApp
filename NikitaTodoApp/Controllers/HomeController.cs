@@ -38,6 +38,20 @@ namespace NikitaTodoApp.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult Upsert(Todo todo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(todo);
+            }
+
+            _unitOfWork.Todo.Add(todo);
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Privacy()
         {
             return View();
